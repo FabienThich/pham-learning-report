@@ -11,5 +11,6 @@ def individual_data(df: pd.DataFrame, name: str) -> pd.DataFrame:
 def build_report(df: pd.DataFrame):
     student_df = df.groupby("student_name").agg(list).reset_index()
     student_df["average"] = student_df["progress_score"].apply(np.mean) * 10
+    
     return student_df
     
