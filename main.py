@@ -1,12 +1,16 @@
 import streamlit as st
+import pandas as pd
 from eda_utils import *
 from config import *
 
 st.set_page_config(
-    page_title="Pham Learning Report",
-    layout="wide",
-    initial_sidebar_state="auto",
+    page_title=PAGE_TITLE,
+    layout=LAYOUT,
+    page_icon=PAGE_ICON,
+    initial_sidebar_state=SIDEBAR_STATE,
 )
+
+data = pd.read_csv(st.secrets['DATASET'])
 
 with st.container():
 
