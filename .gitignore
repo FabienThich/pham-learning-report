@@ -1,4 +1,5 @@
-pham_learning.csv
+.streamlit/secrets.toml
 config.py
 EDA.ipynb
 EDA2.ipynb
+pham_learning.csv
