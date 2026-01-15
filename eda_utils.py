@@ -3,7 +3,7 @@ import numpy as np
 
 
 def individual_data(df: pd.DataFrame, name: str) -> pd.DataFrame:
-    student_df = pd.DataFrame(data=df[df["student_name"] == name])
+    student_df = df[df['student_name'] == name].copy()
     student_df["session_date"] = pd.to_datetime(student_df["session_date"])
     return student_df
 
