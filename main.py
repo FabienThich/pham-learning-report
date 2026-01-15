@@ -24,30 +24,44 @@ if "authenticated" not in st.session_state:
     st.session_state.authenticated = False
 
 if not st.session_state.authenticated:
+    with st.container():
+        spacer_left , col, spacer_right = st.columns([2,3,2])
 
-    with st.form("login_form"):
-        first_name = st.text_input("Student First Name")
-        last_name = st.text_input("Student Last Name")
-        submitted = st.form_submit_button("View Dashboard")
+        with col:
+            with st.form("login_form"):
+                first_name = st.text_input("Student First Name")
+                last_name = st.text_input("Student Last Name")
+                submitted = st.form_submit_button("View Dashboard")
 
-    if submitted:
-        input_name = f"{first_name.strip()} {last_name.strip()}"
+            if submitted:
+                input_name = f"{first_name.strip()} {last_name.strip()}"
 
-        student_rows = data[(data["student_name"] == input_name)]
+                student_rows = data[(data["student_name"] == input_name)]
 
-        if student_rows.empty:
-            st.error("❌ Student not found. Please check the details.")
-            st.stop()
+                if student_rows.empty:
+                    st.error("❌ Student not found. Please check the details.")
+                    st.stop()
 
-        st.session_state.authenticated = True
-        st.session_state.input_name = input_name
+                st.session_state.authenticated = True
+                st.session_state.input_name = input_name
 
-        st.rerun()
+                st.rerun()
 
-    st.stop()
+        st.stop()
 
 if st.session_state.authenticated:
-    if st.button("🔒 Logout"):
+    st.markdown(
+        """
+        <style>
+        div.stButton > button:first-child {
+        background-color: #1E90FF;
+        color: white;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+    if st.button("🔒 Logout", key='logout'):
         st.session_state.authenticated = False
         st.session_state.student_name = ""
         st.rerun()
