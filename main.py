@@ -9,6 +9,7 @@ from config import (
     SIDEBAR_STATE,
     SCORE_GOOD,
     SCORE_BAD,
+    SUBJECT_COLOURS,
 )
 
 st.set_page_config(
@@ -18,6 +19,17 @@ st.set_page_config(
     initial_sidebar_state=SIDEBAR_STATE,
 )
 
+# st.markdown(
+#     """
+#     <style>
+#     #MainMenu {visibility: hidden;}
+#     header {visibility: hidden;}
+#     footer {visibility: hidden;}
+#     </style>
+#     """,
+#     unsafe_allow_html=True,
+# )
+
 data = load_data()
 
 if "authenticated" not in st.session_state:
@@ -25,7 +37,7 @@ if "authenticated" not in st.session_state:
 
 if not st.session_state.authenticated:
     with st.container():
-        spacer_left , col, spacer_right = st.columns([2,3,2])
+        spacer_left, col, spacer_right = st.columns([2, 3, 2])
 
         with col:
             with st.form("login_form"):
@@ -61,7 +73,7 @@ if st.session_state.authenticated:
         """,
         unsafe_allow_html=True,
     )
-    if st.button("🔒 Logout", key='logout'):
+    if st.button("🔒 Logout", key="logout"):
         st.session_state.authenticated = False
         st.session_state.student_name = ""
         st.rerun()
@@ -70,6 +82,9 @@ student_name = st.session_state.input_name
 student_data = individual_data(data, student_name)
 student_report = build_report(student_data)
 average_score = round(student_report["average"].iloc[0], 1)
+
+subject_colours = SUBJECT_COLOURS
+subjects = student_data["subject_topic"].astype(str).unique()
 
 session_attended_this_month = student_data[
     student_data["session_date"].dt.month == pd.Timestamp.today().month
@@ -106,7 +121,7 @@ with st.container():
         unsafe_allow_html=True,
     )
 
-    spacer_left, col1, col2, col3, spacer_right = st.columns([1, 2, 2, 2, 1])
+    spacer_left, col1, col2, col3, spacer_right = st.columns([1, 1.5, 1.5, 1.5, 1])
 
     col1.metric(
         label="🗓️ Total Sessions Attended",
@@ -124,14 +139,28 @@ with st.container():
         border=True,
     )
 
-    # col3.metric(
-    #     label="⏱️ Total Tutoring Time",
-    #     value=int(total_tutor_time),
-    #     # update this below
-    #     delta=total_tutor_time_status,
-    #     delta_color=total_tutor_time_status_color,
-    #     border=True,
-    # )
+    with col3:
+        badge_html = ""
 
-# use matplotlib
-# st.line_chart(student_data, x="session_date", y="progress_score")
+        for subject in subjects:
+            colour = subject_colours.get(subject, "#6C757D")  # gray fallback
+            badge_html += f"""
+                <span style="
+                    background-color:{colour};
+                    display:flex;
+                    color:white;
+                    margin-top:2px;
+                    padding:5px 12px;
+                    border-radius:5px;
+                    font-size:14px;
+                    margin-right:8px;
+                ">
+                    {subject}
+                </span>
+            """
+        st.markdown(badge_html, unsafe_allow_html=True)
+
+    # use matplotlib
+    # spacer_left, col1, col2, spacer_right = st.columns([1, 3, 3, 1])
+    # with col1:
+    #     st.line_chart(student_data, x="session_date", y="progress_score")
