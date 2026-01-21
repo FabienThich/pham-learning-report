@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud, STOPWORDS
 from eda_utils import individual_data, build_report
 from data_utils import load_data
 from config import (
@@ -161,6 +163,24 @@ with st.container():
         st.markdown(badge_html, unsafe_allow_html=True)
 
     # use matplotlib
-    # spacer_left, col1, col2, spacer_right = st.columns([1, 3, 3, 1])
-    # with col1:
-    #     st.line_chart(student_data, x="session_date", y="progress_score")
+    spacer_left, col1, col2, spacer_right = st.columns([1, 3, 3, 1])
+    with col1:
+        st.line_chart(student_data, x="session_date", y="progress_score")
+
+    with col2:
+        notes = student_report.get("tutor_notes", [])
+
+        text = " ".join(notes)
+
+        if text.strip():
+
+            wc = WordCloud(
+                width=500, height=300, background_color="#0E1117", colormap="cool"
+            ).generate(text)
+
+            fig, ax = plt.subplots()
+            ax.imshow(wc, interpolation="bilinear")
+            ax.axis("off")
+            st.pyplot(fig)
+        else:
+            st.info("No tutor notes available.")
