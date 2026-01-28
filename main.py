@@ -39,6 +39,12 @@ if "authenticated" not in st.session_state:
 
 if not st.session_state.authenticated:
     with st.container():
+        spacer_left, col, spacer_right = st.columns([2, 1, 2])
+        with col:
+            st.image(
+                "https://d3319dbeb6b402e32373.cdn6.editmysite.com/uploads/b/d3319dbeb6b402e323737239b0ee6f596f116c7c071babecae5ccf2e57bd640c/pham-learning-logo-transparent_1629744830.png?width=2400&optimize=medium",
+                width=200,
+            )
         spacer_left, col, spacer_right = st.columns([2, 3, 2])
 
         with col:
@@ -63,22 +69,22 @@ if not st.session_state.authenticated:
 
         st.stop()
 
-if st.session_state.authenticated:
-    st.markdown(
-        """
-        <style>
-        div.stButton > button:first-child {
-        background-color: #1E90FF;
-        color: white;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-    if st.button("🔒 Logout", key="logout"):
-        st.session_state.authenticated = False
-        st.session_state.student_name = ""
-        st.rerun()
+# if st.session_state.authenticated:
+#     st.markdown(
+#         """
+#         <style>
+#         div.stButton > button:first-child {
+#         background-color: #1E90FF;
+#         color: white;
+#         }
+#         </style>
+#         """,
+#         unsafe_allow_html=True,
+#     )
+#     if st.button("🔒 Logout", key="logout"):
+#         st.session_state.authenticated = False
+#         st.session_state.student_name = ""
+#         st.rerun()
 
 student_name = st.session_state.input_name
 student_data = individual_data(data, student_name)
@@ -118,10 +124,29 @@ session_attended_status_color = "off"
 
 with st.container():
 
-    st.markdown(
-        f"<h2 style='text-align: center;'> 📘 {student_name} — Progress Overview </h2>",
-        unsafe_allow_html=True,
-    )
+    spacer_left, col_title, col_button = st.columns([.5, 6, .5])
+    with col_button:
+        if st.session_state.authenticated:
+            st.markdown(
+                """
+                <style>
+                div.stButton > button:first-child {
+                background-color: #1E90FF;
+                color: white;
+                }
+                </style>
+                """,
+                unsafe_allow_html=True,
+            )
+            if st.button("🔒 Logout", key="logout"):
+                st.session_state.authenticated = False
+                st.session_state.student_name = ""
+                st.rerun()
+    with col_title:
+        st.markdown(
+            f"<h2 style='text-align: center;'> 📘 {student_name} — Progress Overview </h2>",
+            unsafe_allow_html=True,
+        )
 
     spacer_left, col1, col2, col3, spacer_right = st.columns([1, 1.5, 1.5, 1.5, 1])
 
