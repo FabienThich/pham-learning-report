@@ -21,16 +21,6 @@ st.set_page_config(
     initial_sidebar_state=SIDEBAR_STATE,
 )
 
-# st.markdown(
-#     """
-#     <style>
-#     #MainMenu {visibility: hidden;}
-#     header {visibility: hidden;}
-#     footer {visibility: hidden;}
-#     </style>
-#     """,
-#     unsafe_allow_html=True,
-# )
 
 data = load_data()
 
@@ -68,23 +58,6 @@ if not st.session_state.authenticated:
                 st.rerun()
 
         st.stop()
-
-# if st.session_state.authenticated:
-#     st.markdown(
-#         """
-#         <style>
-#         div.stButton > button:first-child {
-#         background-color: #1E90FF;
-#         color: white;
-#         }
-#         </style>
-#         """,
-#         unsafe_allow_html=True,
-#     )
-#     if st.button("🔒 Logout", key="logout"):
-#         st.session_state.authenticated = False
-#         st.session_state.student_name = ""
-#         st.rerun()
 
 student_name = st.session_state.input_name
 student_data = individual_data(data, student_name)
