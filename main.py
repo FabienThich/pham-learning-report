@@ -39,7 +39,7 @@ if "authenticated" not in st.session_state:
 
 if not st.session_state.authenticated:
     with st.container():
-        spacer_left, col, spacer_right = st.columns([2, 1, 2])
+        spacer_left, col, spacer_right = st.columns([5, 1, 5])
         with col:
             st.image(
                 "https://d3319dbeb6b402e32373.cdn6.editmysite.com/uploads/b/d3319dbeb6b402e323737239b0ee6f596f116c7c071babecae5ccf2e57bd640c/pham-learning-logo-transparent_1629744830.png?width=2400&optimize=medium",
@@ -124,7 +124,7 @@ session_attended_status_color = "off"
 
 with st.container():
 
-    spacer_left, col_title, col_button = st.columns([.5, 6, .5])
+    spacer_left, col_title, col_button = st.columns([0.5, 6, 0.5])
     with col_button:
         if st.session_state.authenticated:
             st.markdown(
@@ -180,7 +180,7 @@ with st.container():
                     padding:5px 12px;
                     border-radius:5px;
                     font-size:14px;
-                    margin-right:8px;
+                    margin-right:0px;
                 ">
                     {subject}
                 </span>
@@ -188,7 +188,7 @@ with st.container():
         st.markdown(badge_html, unsafe_allow_html=True)
 
     # use matplotlib
-    spacer_left, col1, col2, spacer_right = st.columns([1, 3, 3, 1])
+    spacer_left, col1, col2, spacer_right = st.columns([1, 2.25, 2.25, 1])
     with col1:
         st.line_chart(student_data, x="session_date", y="progress_score")
 
@@ -200,7 +200,7 @@ with st.container():
         if text.strip():
 
             wc = WordCloud(
-                width=500, height=300, background_color="#0E1117", colormap="cool"
+                width=500, height=300, background_color="#0E1117", colormap="coolwarm"
             ).generate(text)
 
             fig, ax = plt.subplots()
