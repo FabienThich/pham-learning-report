@@ -4,7 +4,6 @@ import numpy as np
 
 def individual_data(df: pd.DataFrame, name: str) -> pd.DataFrame:
     student_df = df[df['student_name'].str.contains(name, case=False, na=False)].copy()
-    student_df["session_date"] = pd.to_datetime(student_df["session_date"])
     return student_df
 
 
