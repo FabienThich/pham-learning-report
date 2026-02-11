@@ -44,9 +44,10 @@ if not st.session_state.authenticated:
                 submitted = st.form_submit_button("View Dashboard")
 
             if submitted:
-                input_name = f"{first_name.strip()} {last_name.strip()}"
+                input_name = f"{first_name.strip()}"
+                # input_name = f"{first_name.strip()} {last_name.strip()}"
 
-                student_rows = data[(data["student_name"] == input_name)]
+                student_rows = data[data["student_name"].str.contains(input_name, case=False, na=False)]
 
                 if student_rows.empty:
                     st.error("❌ Student not found. Please check the details.")
