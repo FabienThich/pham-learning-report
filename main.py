@@ -66,7 +66,7 @@ student_report = build_report(student_data)
 average_score = round(student_report["average"].iloc[0], 1)
 
 subject_colours = SUBJECT_COLOURS
-subjects = student_data["subject_topic"].astype(str).unique()
+subjects = [s for s in student_report["subject_topic"].iloc[0] if s.lower() != "nan"]
 
 session_attended_this_month = student_data[
     student_data["session_date"].dt.month == pd.Timestamp.today().month
