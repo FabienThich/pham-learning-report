@@ -12,6 +12,7 @@ from config import (
     SCORE_GOOD,
     SCORE_BAD,
     SUBJECT_COLOURS,
+    CUSTOM_STOPWORDS,
 )
 
 st.set_page_config(
@@ -190,8 +191,18 @@ with st.container():
 
         if text.strip():
 
+            custom_stopwords = set(CUSTOM_STOPWORDS)
+
+            for name_part in student_name.lower().split():
+                custom_stopwords.add(name_part)
+
             wc = WordCloud(
-                width=500, height=300, background_color="#0E1117", colormap="coolwarm"
+                width=500,
+                height=300,
+                background_color="#0E1117",
+                colormap="coolwarm",
+                max_words=10,
+                stopwords=custom_stopwords,
             ).generate(text)
 
             fig, ax = plt.subplots()
