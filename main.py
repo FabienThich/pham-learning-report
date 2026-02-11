@@ -170,15 +170,23 @@ with st.container():
             """
         st.markdown(badge_html, unsafe_allow_html=True)
 
+        if not subjects:
+            st.markdown("Subjects not available.")
+
     # use matplotlib
     spacer_left, col1, col2, spacer_right = st.columns([1, 2.25, 2.25, 1])
     with col1:
-        st.line_chart(student_data, x="session_date", y="progress_score")
+        if not student_data["progress_score"].isna().all():
+            st.line_chart(student_data, x="session_date", y="progress_score")
+        else:
+            st.info("No progress score data available.")
 
     with col2:
         notes = student_report.get("tutor_notes", [])
 
-        text = " ".join(str(n) for n in notes if pd.notna(n) and str(n).lower() != "nan")
+        text = " ".join(
+            str(n) for n in notes if pd.notna(n) and str(n).lower() != "nan"
+        )
 
         if text.strip():
 
