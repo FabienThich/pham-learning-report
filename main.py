@@ -47,7 +47,9 @@ if not st.session_state.authenticated:
                 input_name = f"{first_name.strip()}"
                 # input_name = f"{first_name.strip()} {last_name.strip()}"
 
-                student_rows = data[data["student_name"].str.contains(input_name, case=False, na=False)]
+                student_rows = data[
+                    data["student_name"].str.contains(input_name, case=False, na=False)
+                ]
 
                 if student_rows.empty:
                     st.error("❌ Student not found. Please check the details.")
@@ -63,7 +65,11 @@ if not st.session_state.authenticated:
 student_name = st.session_state.input_name
 student_data = individual_data(data, student_name)
 student_report = build_report(student_data)
-average_score = round(student_report["average"].iloc[0], 1)
+
+if student_report.empty or pd.isna(student_report["average"].iloc[0]):
+    average_score = None
+else:
+    average_score = round(student_report["average"].iloc[0], 1)
 
 subject_colours = SUBJECT_COLOURS
 subjects = [s for s in student_report["subject_topic"].iloc[0] if s.lower() != "nan"]
@@ -80,17 +86,20 @@ session_attended_last_month = student_data[
 ].shape[0]
 
 
-progress_status = (
-    "Progressing Well"
-    if average_score > SCORE_GOOD
-    else "On Track" if average_score > SCORE_BAD else "Needs Improvement"
-)
-
-progress_status_color = (
-    "normal"
-    if average_score > SCORE_GOOD
-    else "off" if average_score > SCORE_BAD else "off"
-)
+if average_score is None:
+    progress_status = "Not Available"
+    progress_status_color = "off"
+else:
+    progress_status = (
+        "Progressing Well"
+        if average_score > SCORE_GOOD
+        else "On Track" if average_score > SCORE_BAD else "Needs Improvement"
+    )
+    progress_status_color = (
+        "normal"
+        if average_score > SCORE_GOOD
+        else "off" if average_score > SCORE_BAD else "off"
+    )
 
 session_attended_status = f"{session_attended_last_month} Attended Last Month"
 
@@ -134,7 +143,7 @@ with st.container():
 
     col2.metric(
         label="📈 Average Progress Score",
-        value=f"{average_score}%",
+        value="N/A" if average_score is None else f"{average_score}%",
         delta=progress_status,
         delta_color=progress_status_color,
         border=True,
@@ -169,7 +178,7 @@ with st.container():
     with col2:
         notes = student_report.get("tutor_notes", [])
 
-        text = " ".join(notes)
+        text = " ".join(str(n) for n in notes if pd.notna(n) and str(n).lower() != "nan")
 
         if text.strip():
 
