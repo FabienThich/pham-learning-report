@@ -3,7 +3,7 @@ import streamlit as st
 
 
 def load_data():
-    df = pd.read_csv('production.csv', usecols=range(7))
+    df = pd.read_csv(st.secrets["DATASET"], usecols=range(7))
     df["student_name"] = df["student_name"].astype(str)
     df["subject_topic"] = df["subject_topic"].astype(str)
     df["tutor_notes"] = df["tutor_notes"].astype(str)
