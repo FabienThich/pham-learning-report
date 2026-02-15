@@ -127,7 +127,7 @@ with st.container():
                 st.rerun()
     with col_title:
         st.markdown(
-            f"<h2 style='text-align: center;'> 📘 {student_name} — Progress Overview </h2>",
+            f"<h2 style='text-align: center;'> 📘 {student_name.capitalize()} — Progress Overview </h2>",
             unsafe_allow_html=True,
         )
 
