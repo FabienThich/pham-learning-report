@@ -23,6 +23,14 @@ SUBJECT_COLOURS = {
 CUSTOM_STOPWORDS = {
     # Standard filler words
     "i",
+    "he",
+    "she",
+    "they",
+    "him",
+    "her",
+    "them",
+    "we",
+    "us",
     "the",
     "a",
     "an",
@@ -129,9 +137,9 @@ CUSTOM_STOPWORDS = {
     "my",
     "we",
     # Tutoring report phrases
-    'homework',
-    'worksheet',
-    'worksheets',
+    "homework",
+    "worksheet",
+    "worksheets",
     "scored",
     "student",
     "students",
