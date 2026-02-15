@@ -22,9 +22,6 @@ st.set_page_config(
     initial_sidebar_state=SIDEBAR_STATE,
 )
 
-
-data = load_data()
-
 if "authenticated" not in st.session_state:
     st.session_state.authenticated = False
 
@@ -62,6 +59,8 @@ if not st.session_state.authenticated:
                 st.rerun()
 
         st.stop()
+
+data = load_data()
 
 student_name = st.session_state.input_name
 student_data = individual_data(data, student_name)
