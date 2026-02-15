@@ -4,7 +4,9 @@ import io
 
 
 def load_data():
-    df = pd.read_csv(io.StringIO(st.secrets["DATA"]))
+    df = pd.read_csv(
+        "https://docs.google.com/spreadsheets/d/1dhnYQQ9h64gQ2F0f0IDXTrocJ5efBeFS14GYI1t3Zhs/export?format=csv"
+    )
     df.drop(
         columns=["Column 8", "Upload 1 to 3 pages of the student's work here"],
         inplace=True,
