@@ -1,6 +1,5 @@
 import pandas as pd
 import streamlit as st
-import io
 
 
 def load_data():
