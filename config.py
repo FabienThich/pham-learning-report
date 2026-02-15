@@ -22,6 +22,7 @@ SUBJECT_COLOURS = {
 
 CUSTOM_STOPWORDS = {
     # Standard filler words
+    "i",
     "the",
     "a",
     "an",
