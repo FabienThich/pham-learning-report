@@ -1,0 +1,9 @@
+[theme]
+primaryColor = "#1E90FF"        
+backgroundColor = "#0E1117"      
+secondaryBackgroundColor = "#1A1C23"  
+textColor = "#E4E6EB"             
+font = "sans serif"
+
+[theme.components]
+buttonDangerColor = "#FF4B4B" 

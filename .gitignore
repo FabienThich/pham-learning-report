@@ -1,4 +1,4 @@
-.streamlit
+.streamlit/secrets.toml
 EDA.ipynb
 EDA2.ipynb
 phamlearning.csv
