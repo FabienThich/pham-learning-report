@@ -10,7 +10,9 @@ def individual_data(df: pd.DataFrame, name: str) -> pd.DataFrame:
 def build_report(df: pd.DataFrame):
     student_df = df.groupby("student_name").agg(list).reset_index()
     student_df["average"] = student_df["progress_score"].apply(np.mean) * 10
-    student_df['tutor_notes'] = student_df['tutor_notes'].apply(lambda notes: " ".join(str(n) for n in notes if isinstance(n, str)))
+    student_df['tutor_notes'] = student_df['tutor_notes'].apply(
+        lambda notes: " ".join(str(n) for n in notes if isinstance(n, str) and str(n).lower() != "nan")
+    )
     
     return student_df
     
