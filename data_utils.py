@@ -1,9 +1,10 @@
 import pandas as pd
 import streamlit as st
+import io
 
 
 def load_data():
-    df = pd.read_csv(st.secrets["DATASET"])
+    df = pd.read_csv(io.StringIO(st.secrets["DATA"]))
     df.drop(
         columns=["Column 8", "Upload 1 to 3 pages of the student's work here"],
         inplace=True,
