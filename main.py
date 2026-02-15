@@ -173,11 +173,32 @@ with st.container():
         if not subjects:
             st.markdown("Subjects not available.")
 
-    # use matplotlib
     spacer_left, col1, col2, spacer_right = st.columns([1, 2.25, 2.25, 1])
     with col1:
         if not student_data["progress_score"].isna().all():
-            st.line_chart(student_data, x="session_date", y="progress_score")
+            fig, ax = plt.subplots(figsize=(6, 4))
+            ax.plot(
+                student_data["session_date"], 
+                student_data["progress_score"], 
+                marker='o', 
+                linewidth=2, 
+                color='#1E90FF', 
+                markersize=8
+            )
+            ax.set_xlabel("Date", fontsize=10, color='white')
+            ax.set_ylabel("Progress Score", fontsize=10, color='white')
+            ax.set_title("Progress Over Time", fontsize=12, color='white')
+            ax.set_ylim(0, 11)
+            ax.set_facecolor("#0E1117")
+            fig.patch.set_facecolor("#0E1117")
+            ax.tick_params(colors='white')
+            ax.spines['bottom'].set_color('white')
+            ax.spines['left'].set_color('white')
+            ax.spines['top'].set_color('#0E1117')
+            ax.spines['right'].set_color('#0E1117')
+            plt.xticks(rotation=45)
+            plt.tight_layout()
+            st.pyplot(fig)
         else:
             st.info("No progress score data available.")
 
